@@ -1,0 +1,16 @@
+asd
+асад,
+bottle
+бутылка,
+cat
+кошка,кот,
+dog
+собака,пёс,
+red of square
+красная площадь,
+revenge
+месть,
+square
+площадь,
+triangle
+треугольник,
