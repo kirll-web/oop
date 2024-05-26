@@ -60,7 +60,7 @@ public:
     char& operator[](size_t index) const;
 
 
-    friend CMyString operator+(const CMyString& left, const CMyString& right);
+    CMyString operator+(const CMyString& left, const CMyString& right);
     friend CMyString operator+(const std::string& stlString, const CMyString& right);
     friend CMyString operator+(const char* charStr, const CMyString& right);
     friend bool operator==(CMyString const& left, CMyString const& right);
