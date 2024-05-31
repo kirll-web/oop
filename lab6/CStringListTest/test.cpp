@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "../../lab6/StringLust/CStringList.h"
 #include "../../lab6/StringLust/CStringList.cpp"
-
+#include <vector>
 
 
 TEST(TestEmptyList, EmptyList) 
@@ -12,7 +12,7 @@ TEST(TestEmptyList, EmptyList)
 	EXPECT_TRUE(list.GetSize() != 1);
 }
 
-TEST(TestNotEmptyList, NotEmptyList) 
+TEST(TestNotEmptyListAndPushBack, NotEmptyListAndPushBack)
 {
 	CStringList list;
 	list.Push_back("1");
@@ -21,25 +21,29 @@ TEST(TestNotEmptyList, NotEmptyList)
 	list.Push_back("1asdasdasdsa");
 	EXPECT_EQ(list.GetSize(), 2);
 	EXPECT_TRUE(list.GetSize() != 3);
+	list.Push_back("1asdasdasdsa1");
+	list.Push_back("1asdasdasdsa2");
+	list.Push_back("1asdasdasdsa3");
+	EXPECT_EQ(list.GetSize(), 5);
+	EXPECT_TRUE(list.GetSize() != 3);
 }
 
-TEST(TestPushBack, PushBack)
+TEST(TestNotEmptyListAndPushFront, NotEmptyListAndPushFront)
 {
 	CStringList list;
-	std::string str = "hello world";
-	list.Push_back(str);
-	EXPECT_TRUE(*list.Cbegin() == str);
-	EXPECT_NO_THROW(list.Push_back(str));
+	list.Push_back("1");
+	EXPECT_EQ(list.GetSize(), 1);
+	EXPECT_TRUE(list.GetSize() != 2);
+	list.Push_back("1asdasdasdsa");
+	EXPECT_EQ(list.GetSize(), 2);
+	EXPECT_TRUE(list.GetSize() != 3);
+	list.Push_back("1asdasdasdsa1");
+	list.Push_back("1asdasdasdsa2");
+	list.Push_back("1asdasdasdsa3");
+	EXPECT_EQ(list.GetSize(), 5);
+	EXPECT_TRUE(list.GetSize() != 3);
 }
 
-TEST(TestPushFront, PushBack)
-{
-	CStringList list;
-	std::string str = "hello world";
-	list.Push_front(str);
-	EXPECT_TRUE(*list.Cbegin() == str);
-	EXPECT_NO_THROW(list.Push_front(str));
-}
 
 TEST(TestIsEmpty, IsEmpty)
 {
@@ -59,6 +63,50 @@ TEST(TestIsNotEmpty, IsNotEmpty)
 	EXPECT_NO_THROW(list.IsNotEmpty());
 }
 
+void TestIteratorForRange()
+{
+	CStringList list;
+	std::vector <std::string> vec{"1","2","3", "4"};
+	list.Push_back("1");
+	list.Push_back("2");
+	list.Push_back("3");
+	list.Push_back("4");
+	int index = 0;
+	for (auto it = list.begin(); it != list.end(); it++)
+	{
+		EXPECT_TRUE(*it == vec[index]);
+		++index;
+	}
+}
+
+
+TEST(TestForRange, ForRange)
+{
+	EXPECT_NO_THROW(TestIteratorForRange());
+}
+
+void TestConstIteratorForRange()
+{
+	CStringList list;
+	std::vector <std::string> vec{ "1","2","3", "4" };
+	list.Push_back("1");
+	list.Push_back("2");
+	list.Push_back("3");
+	list.Push_back("4");
+	int index = 0;
+	for (auto it = list.Cbegin(); it != list.Cend(); it++)
+	{
+		EXPECT_TRUE(*it == vec[index]);
+		++index;
+	}
+}
+
+TEST(TestConstIteratorForConst, ConstIteratorForRange)
+{
+	EXPECT_NO_THROW(TestConstIteratorForRange());
+}
+
+
 TEST(TestClearList, ClearList) 
 {
 	CStringList list;
@@ -71,13 +119,17 @@ TEST(TestClearList, ClearList)
 	EXPECT_TRUE(list.IsEmpty());
 }
 
-TEST(TestClearEmptyListNoThrow, ClearEmptyListNoThrow)
+TEST(TestBegin, TestBegin)
 {
 	CStringList list;
-	EXPECT_TRUE(list.IsEmpty());
+	std::string str = "hello world";
+	list.Push_back(str);
+	EXPECT_TRUE(*list.begin() == str);
 	EXPECT_NO_THROW(list.Clear());
 	EXPECT_TRUE(list.IsEmpty());
+	EXPECT_ANY_THROW(*list.begin());
 }
+
 TEST(TestInsert, Insert) 
 {
 	CStringList list;
@@ -96,6 +148,14 @@ TEST(TestInsert, Insert)
 	EXPECT_TRUE(*(list.begin() + 1) == vec[1]);
 	EXPECT_NO_THROW(list.Clear());
 	EXPECT_TRUE(list.IsEmpty());
+	EXPECT_NO_THROW(list.Insert(list.begin(), vec[1]));
+	EXPECT_NO_THROW(list.Insert(list.end(), vec[1]));
+	EXPECT_NO_THROW(list.Clear());
+	list.Push_back("1");
+	list.Push_back("2");
+	list.Push_back("3");
+	EXPECT_ANY_THROW(list.Insert(list.begin() + 4, vec[1]));
+	EXPECT_ANY_THROW(list.Insert(list.end() + 4, vec[1]));
 }
 
 TEST(TestErase, Erase)
@@ -111,4 +171,22 @@ TEST(TestErase, Erase)
 	EXPECT_TRUE(list.GetSize() == 2);
 	EXPECT_NO_THROW(list.Clear());
 	EXPECT_TRUE(list.IsEmpty());
+}
+
+
+TEST(TestStl, Erase)
+{
+	CStringList list;
+	std::vector<std::string> vec = { "3", "2", "1" };
+	std::vector<std::string> exceptVec = { "1", "2", "3" };
+	list.Push_back(vec[0]);
+	list.Push_back(vec[1]);
+	list.Push_back(vec[2]);
+	std::sort(list.begin(), list.end());
+	int index = 0;
+	for (auto it = list.begin(); it != list.end(); it++)
+	{
+		EXPECT_TRUE(*it == exceptVec[index]);
+		++index;
+	}
 }

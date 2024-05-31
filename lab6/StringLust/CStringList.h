@@ -31,7 +31,7 @@ public:
 	{
 		friend CStringList;
 	public:
-		CIterator(CStringList::Node* node, bool isReverse = false);
+		CIterator(CStringList::Node* node, bool isReverse = false, const CStringList* list = nullptr);
 		CIterator() = default;
 		std::string& operator * () const;
 		bool operator!=(CIterator const& other) const;
@@ -46,23 +46,36 @@ public:
 	private:
 		CStringList::Node* m_node = nullptr;
 		bool m_reverse = false;
+		const CStringList* m_list = nullptr;
 	};
 
-	class CConstIterator : std::iterator<std::bidirectional_iterator_tag, std::string>
+	class CConstIterator : std::iterator<std::random_access_iterator_tag, std::string>
 	{
 		friend CStringList;
 	public:
-		CConstIterator(CStringList::Node* node, bool isReverse = false);
+		using iterator_category = std::random_access_iterator_tag;
+		using value_type = std::string;
+		using difference_type = std::ptrdiff_t;
+		using pointer = std::string*;
+		using reference = std::string&;
+		CConstIterator(CStringList::Node* node, bool isReverse = false, const CStringList* list = nullptr);
 		CConstIterator() = default;
 		const std::string& operator * () const;
 		bool operator!=(CConstIterator const& other) const;
 		bool operator==(CConstIterator const& other) const;
-		/*const CIterator& operator++() const;
-		const CIterator& operator--() const;*/
+		const CConstIterator& operator++();
+		const CConstIterator& operator++(int);
+		const CConstIterator& operator--();
+		const CConstIterator& operator--(int);
+
+		const CConstIterator& operator+(size_t index);
+		const CConstIterator& operator-(size_t index);
+		//const CConstIterator& operator-(size_t index);
 		const std::string* operator->()const;
 	private:
 		CStringList::Node* m_node = nullptr;
 		bool m_reverse = false;
+		const CStringList* m_list;
 	};
 	//Добавление строки в начало и 
 	void Push_front(const std::string& data);
@@ -92,7 +105,7 @@ public:
 	CStringList::CIterator Rend() const;
 	const CStringList::CConstIterator Rcbegin() const;
 	const CStringList::CConstIterator Rcend() const;
-
+	
 private:
 	size_t m_size;
 	std::unique_ptr<Node> m_head = nullptr;
