@@ -275,6 +275,8 @@ CMyString& CMyString::operator+=(CMyString const& other)
 	return *this;
 }
 
+
+
 CMyString operator+(const std::string& stlString, const CMyString& right)
 {
 	size_t stlStringLength = stlString.length();

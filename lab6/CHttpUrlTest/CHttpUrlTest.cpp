@@ -76,8 +76,4 @@ TEST_CASE("check TestingExceptionsCHttpProtocolDomainDocument")
         CHECK(TestingExceptionsCHttpProtocolDomainDocument(Protocol::HTTP, "ab.com", "doc.docx") == false);
         CHECK(TestingExceptionsCHttpProtocolDomainDocument(Protocol::HTTP, "1.com/", "doc.docx"));
     }
-
-    
-
-   
 }
