@@ -67,7 +67,7 @@ CStringList::CIterator& CStringList::CIterator::operator++()
 	return *this;
 }
 
-CStringList::CIterator& CStringList::CIterator::operator++(int)
+CStringList::CIterator CStringList::CIterator::operator++(int)
 {
 	if (*this == nullptr || m_list->IsEmpty())
 	{
@@ -245,7 +245,7 @@ const CStringList::CConstIterator& CStringList::CConstIterator::operator++()
 	return *this;
 }
 
-const CStringList::CConstIterator& CStringList::CConstIterator::operator++(int)
+const CStringList::CConstIterator CStringList::CConstIterator::operator++(int)
 {
 	if (*this == nullptr || m_list->IsEmpty())
 	{
@@ -400,6 +400,18 @@ CStringList& CStringList::operator=(CStringList&& other)
 	return *this;
 }
 
+std::string& CStringList::operator[](size_t index)
+{
+	CIterator b = begin();
+
+	for (int i = 0; i < index; i++)
+	{
+		++b;
+	};
+
+	return b.m_node->data;
+}
+
 CStringList::CIterator CStringList::begin() const
 {
 	return CStringList::CIterator(m_head.get(), false, this);
@@ -491,4 +503,77 @@ CStringList::CIterator CStringList::Erase(const CStringList::CIterator& it)
 	--m_size;
 
 	return it;
+}
+
+ptrdiff_t CStringList::CIterator::operator-(const CIterator& other) const
+{
+	ptrdiff_t distance = 0;
+	CIterator temp = other;
+	while (temp != *this)
+	{
+		++temp;
+		++distance;
+		if (temp.m_node == nullptr)
+		{
+			throw std::out_of_range("Iterators not in the same list");
+		}
+	}
+	return distance;
+}
+
+//CStringList::CIterator CStringList::CIterator::operator+(ptrdiff_t n) const
+//{
+//    CIterator temp = *this;
+//    while (n > 0 && temp.m_node)
+//    {
+//        temp.m_node = temp.m_reverse ? temp.m_node->prev : temp.m_node->next.get();
+//        --n;
+//    }
+//    while (n < 0 && temp.m_node)
+//    {
+//        temp.m_node = temp.m_reverse ? temp.m_node->next.get() : temp.m_node->prev;
+//        ++n;
+//    }
+//    return temp;
+//}
+
+CStringList::CIterator& CStringList::CIterator::operator+(ptrdiff_t n)
+{
+	CStringList::CIterator temp = it;
+	while (n > 0 && temp.m_node)
+	{
+		temp.m_node = temp.m_reverse ? temp.m_node->prev : temp.m_node->next.get();
+		--n;
+	}
+	while (n < 0 && temp.m_node)
+	{
+		temp.m_node = temp.m_reverse ? temp.m_node->next.get() : temp.m_node->prev;
+		++n;
+	}
+	return temp;
+}
+
+CStringList::CIterator CStringList::CIterator::operator-(ptrdiff_t n) const
+{
+	return *this + (-n);
+}
+
+bool CStringList::CIterator::operator<=(const CIterator& other) const
+{
+	return !(m_node->data > other.m_node->data);
+}
+
+bool CStringList::CIterator::operator>=(const CIterator& other) const
+{
+	return !(m_node->data < other.m_node->data);
+}
+
+bool CStringList::CIterator::operator<(const CIterator& other) const
+{
+	return (*this - other) < 0;
+}
+
+bool CStringList::CIterator::operator>(const CIterator& other) const
+{
+	return (*this - other) > 0;
 }
