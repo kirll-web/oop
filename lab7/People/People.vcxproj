@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{165a0614-4734-4195-8b7b-30b3809518f7}</ProjectGuid>
-    <RootNamespace>StringLust</RootNamespace>
+    <ProjectGuid>{e716f9cd-3f10-4d26-a302-17dc107d9832}</ProjectGuid>
+    <RootNamespace>People</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -128,15 +128,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CConstIterator.cpp" />
-    <ClCompile Include="CIterator.cpp" />
-    <ClCompile Include="CConstReverseIterator.cpp" />
-    <ClCompile Include="CReverseIterator.cpp" />
-    <ClCompile Include="CStringList.cpp" />
-    <ClCompile Include="StringLust.cpp" />
+    <ClCompile Include="CAdvancedStudent.cpp" />
+    <ClCompile Include="CPupil.cpp" />
+    <ClCompile Include="CStudentImpl.h" />
+    <ClCompile Include="CTeacher.cpp" />
+    <ClCompile Include="CWorker.cpp" />
+    <ClCompile Include="IPerson.h" />
+    <ClCompile Include="CPersonImpl.h" />
+    <ClCompile Include="People.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CStringList.h" />
+    <ClInclude Include="CAdvancedStudent.h" />
+    <ClInclude Include="CPupil.h" />
+    <ClInclude Include="CStudent.h" />
+    <ClInclude Include="CTeacher.h" />
+    <ClInclude Include="CWorker.h" />
+    <ClInclude Include="IAdvancedStudent.h" />
+    <ClInclude Include="IPupil.h" />
+    <ClInclude Include="IStudent.h" />
+    <ClInclude Include="ITeacher.h" />
+    <ClInclude Include="IWorker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

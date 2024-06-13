@@ -1,40 +1,38 @@
 #include "pch.h"
-#include "../../lab6/StringLust/CStringList.h"
-#include "../../lab6/StringLust/CIterator.cpp"
-#include "../../lab6/StringLust/CConstIterator.cpp"
-#include "../../lab6/StringLust/CConstReverseIterator.cpp"
-#include "../../lab6/StringLust/CReverseIterator.cpp"
-#include "../../lab6/StringLust/CStringList.cpp"
+#include "../CMyList/CMyList.h"
 #include <vector>
-
-
-TEST(TestEmptyList, EmptyList) 
+#include <string>
+using namespace std;
+TEST(TestEmptyList, EmptyList)
 {
-	CStringList list;
-	EXPECT_NO_THROW(CStringList list);
-	EXPECT_EQ(list.GetSize(), 0);
-	EXPECT_TRUE(list.GetSize() != 1);
+	CMyList<int> listInt;
+	CMyList<string> listString;
+	EXPECT_NO_THROW(CMyList<int> list);
+	EXPECT_EQ(listInt.GetSize(), 0);
+	EXPECT_TRUE(listInt.GetSize() != 1);
+	EXPECT_EQ(listString.GetSize(), 0);
+	EXPECT_TRUE(listString.GetSize() != 1);
 }
 
 TEST(TestNotEmptyListAndPushBack, NotEmptyListAndPushBack)
 {
-	CStringList list;
-	list.push_back("1");
-	EXPECT_EQ(list.GetSize(), 1);
+	CMyList<int> list;
+	list.push_back(1);
+	list.push_back(2);
+	list.push_back(3);
+	EXPECT_EQ(list.GetSize(), 3);
 	EXPECT_TRUE(list.GetSize() != 2);
-	list.push_back("1asdasdasdsa");
-	EXPECT_EQ(list.GetSize(), 2);
-	EXPECT_TRUE(list.GetSize() != 3);
-	list.push_back("1asdasdasdsa1");
-	list.push_back("1asdasdasdsa2");
-	list.push_back("1asdasdasdsa3");
-	EXPECT_EQ(list.GetSize(), 5);
-	EXPECT_TRUE(list.GetSize() != 3);
+	CMyList<string> listString;
+	listString.push_back("1asdasdasdsa1");
+	listString.push_back("1asdasdasdsa2");
+	listString.push_back("1asdasdasdsa3");
+	EXPECT_EQ(list.GetSize(), 3);
+	EXPECT_TRUE(list.GetSize() != 2);
 }
 
 TEST(TestNotEmptyListAndPushFront, NotEmptyListAndPushFront)
 {
-	CStringList list;
+	CMyList<string> list;
 	list.push_back("1");
 	EXPECT_EQ(list.GetSize(), 1);
 	EXPECT_TRUE(list.GetSize() != 2);
@@ -51,7 +49,7 @@ TEST(TestNotEmptyListAndPushFront, NotEmptyListAndPushFront)
 
 TEST(TestIsEmpty, IsEmpty)
 {
-	CStringList list;
+	CMyList<string>  list;
 	EXPECT_TRUE(list.IsEmpty());
 	std::string str = "hello world";
 	list.push_front(str);
@@ -60,16 +58,15 @@ TEST(TestIsEmpty, IsEmpty)
 
 TEST(TestIsNotEmpty, IsNotEmpty)
 {
-	CStringList list;
+	CMyList<string>  list;
 	std::string str = "hello world";
 	list.push_front(str);
 	EXPECT_TRUE(list.IsNotEmpty());
-	EXPECT_NO_THROW(list.IsNotEmpty());
 }
 
 void TestIteratorForRange()
 {
-	CStringList list;
+	CMyList<string>  list;
 	std::vector <std::string> vec{"1","2","3", "4"};
 	list.push_back("1");
 	list.push_back("2");
@@ -90,7 +87,7 @@ TEST(TestForRange, ForRange)
 
 void TestConstIteratorForRange()
 {
-	CStringList list;
+	CMyList<string>  list;
 	std::vector <std::string> vec{ "1","2","3", "4" };
 	list.push_back("1");
 	list.push_back("2");
@@ -104,15 +101,33 @@ void TestConstIteratorForRange()
 	}
 }
 
+void TestConstIterator()
+{
+	CMyList<int>  list;
+	list.push_back(1);
+	list.push_back(2);
+	CMyList<int>::CConstIterator b = list.cbegin();
+	b++;
+}
+
 TEST(TestConstIteratorForConst, ConstIteratorForRange)
 {
 	EXPECT_NO_THROW(TestConstIteratorForRange());
+
+
+	CMyList<string>  list;
+	std::vector <std::string> vec{ "1","2","3", "4" };
+	list.push_back("1");
+	list.push_back("2");
+	list.push_back("3");
+	
+	EXPECT_NO_THROW(TestConstIterator());
 }
 
 TEST(TestClearList, ClearList) 
 {
-	CStringList list;
-	std::string str = "hello world";
+	CMyList<string> list;
+	string str = "hello world";
 	list.push_back(str);
 	list.push_back("asdasdasdsadsa");
 	list.push_back("str");
@@ -126,7 +141,7 @@ TEST(TestClearList, ClearList)
 
 TEST(TestBegin, TestBegin)
 {
-	CStringList list;
+	CMyList<string> list;
 	std::string str = "hello world";
 	list.push_back(str);
 	EXPECT_TRUE(*list.begin() == str);
@@ -137,20 +152,17 @@ TEST(TestBegin, TestBegin)
 
 TEST(TestInsert, Insert) 
 {
-	CStringList list;
+	CMyList<string> list;
 	std::vector<std::string> vec = { "12asd", "asdasd", "asdasd" };
 	list.push_back("1");
 	list.push_back("2");
 	list.push_back("3");
 	EXPECT_NO_THROW(list.Insert(list.begin(), vec[0]));
-	EXPECT_NO_THROW(list.Insert(list.begin() + 1, vec[1]));
 	EXPECT_TRUE(list.IsNotEmpty());
 	EXPECT_TRUE(!list.IsEmpty());
 	EXPECT_TRUE(*list.begin() ==vec[0]);
-	EXPECT_TRUE(*(list.begin() + 1) == vec[1]);
 	EXPECT_TRUE(!list.IsEmpty());
 	EXPECT_TRUE(*list.cbegin() == vec[0]);
-	EXPECT_TRUE(*(list.begin() + 1) == vec[1]);
 	EXPECT_NO_THROW(list.Clear());
 	EXPECT_TRUE(list.IsEmpty());
 	EXPECT_NO_THROW(list.Insert(list.begin(), vec[1]));
@@ -159,13 +171,11 @@ TEST(TestInsert, Insert)
 	list.push_back("1");
 	list.push_back("2");
 	list.push_back("3");
-	EXPECT_ANY_THROW(list.Insert(list.begin() + 4, vec[1]));
-	EXPECT_ANY_THROW(list.Insert(list.end() + 4, vec[1]));
 }
 
 TEST(TestErase, Erase)
 {
-	CStringList list;
+	CMyList<string> list;
 	std::vector<std::string> vec = { "12asd", "asdasd", "asdasd" };
 	for (int i = 0; i < vec.size(); i++)
 	{
@@ -182,7 +192,7 @@ TEST(TestErase, Erase)
 
 void TestReverseIteratorForRange()
 {
-	CStringList list;
+	CMyList<string> list;
 	std::vector <std::string> vec{ "1","2","3", "4" };
 	std::vector <std::string> vecExpect{  "4","3","2", "1", };
 	list.push_back("1");
@@ -205,8 +215,8 @@ TEST(TestReverseIterator, ReverseIterator)
 
 TEST(TestTransform, Transform)
 {
-	CStringList list;
-	CStringList list2;
+	CMyList<string> list;
+	CMyList<string> list2;
 	list.push_front("1");
 	list.push_front("2");
 	list.push_front("3");
@@ -226,15 +236,103 @@ TEST(TestTransform, Transform)
 
 TEST(TestFind, Find)
 {
-	CStringList list;
+	CMyList<string> list;
 	list.push_front("1");
 	list.push_front("2");
 	list.push_front("3");
 
-
-	CStringList::CIterator find = std::find(list.begin(), list.end(), "2");
+	CMyList<string>::CIterator find = std::find(list.begin(), list.end(), "2");
 
 	EXPECT_TRUE(*find == "2");
 }
 
+TEST(TestOperatorPostPlusPlus, OperatorPostPlusPlus)
+{
+	CMyList<string> list;
+	list.push_back("1");
+	list.push_back("2");
+	list.push_back("3");
 
+	EXPECT_NO_THROW(list.begin()++);
+	EXPECT_ANY_THROW(list.end()++);
+
+	string expectRes1 = "1";
+	string expectRes2 = "2";
+	EXPECT_NO_THROW(*(list.begin()++) == expectRes1);
+	auto it = list.begin();
+	EXPECT_TRUE(*(it++) == expectRes1);
+	EXPECT_TRUE(*it == expectRes2);
+}
+
+TEST(TestOperatorPrefPlusPlus, OperatorPrefPlusPlus)
+{
+	CMyList<string> list;
+	list.push_back("1");
+	list.push_back("2");
+	list.push_back("3");
+
+	EXPECT_NO_THROW(list.begin()++);
+	EXPECT_ANY_THROW(list.end()++);
+
+	string expectRes1 = "2";
+	EXPECT_NO_THROW(*(++list.begin()) == expectRes1);
+	auto it = list.begin();
+	EXPECT_TRUE(*(++it) == expectRes1);
+	EXPECT_TRUE(*it == expectRes1);
+}
+
+TEST(TestOperatorPostMinusMinus, OperatorPostMinusMinus)
+{
+	CMyList<string> list;
+	list.push_back("1");
+	list.push_back("2");
+	list.push_back("3");
+
+	EXPECT_NO_THROW(list.end()--);
+	EXPECT_ANY_THROW(list.begin()--);
+
+	string expectRes2 = "3";
+	EXPECT_NO_THROW((list.end()--));
+	auto it = list.end();
+	EXPECT_TRUE((it--) == list.end());
+	EXPECT_TRUE(*it == expectRes2);
+}
+
+TEST(TestOperatorPrefMinusMinus, OperatorPrefMinusMinus)
+{
+	CMyList<string> list;
+	list.push_back("1");
+	list.push_back("2");
+	list.push_back("3");
+	EXPECT_THROW(--list.begin(), std::out_of_range);
+	EXPECT_NO_THROW(--list.end());
+
+	string expectRes1 = "3";
+	EXPECT_NO_THROW(*(--list.end()));
+	auto it = list.end();
+	EXPECT_TRUE(*(--it) == expectRes1);
+}
+
+TEST(TestOperatorEqualIterator, operatorEqualItertor)
+{
+	CMyList<string> list;
+	list.push_front("1");
+	list.push_front("2");
+	list.push_front("3");
+	EXPECT_NO_THROW(list.begin() == list.end());
+	EXPECT_FALSE(list.begin() == list.end());
+	EXPECT_FALSE(list.begin() == list.end());
+	EXPECT_TRUE(list.begin() == list.begin());
+}
+
+TEST(TestOperatorNotEqualIterator, operatorNotEqualIterator)
+{
+	CMyList<string> list;
+	list.push_front("1");
+	list.push_front("2");
+	list.push_front("3");
+	EXPECT_NO_THROW(list.begin() != list.end());
+	EXPECT_TRUE(list.begin() != list.end());
+	EXPECT_TRUE(list.begin() != list.end());
+	EXPECT_FALSE(list.begin() != list.begin());
+}

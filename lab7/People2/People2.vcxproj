@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{909b82d8-a9d0-477e-9d58-6d7cfa35c50f}</ProjectGuid>
-    <RootNamespace>MyArray</RootNamespace>
+    <ProjectGuid>{80745fe7-6416-4835-9884-9f44ba11fa4a}</ProjectGuid>
+    <RootNamespace>People2</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -127,7 +127,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="MyArray.cpp" />
+    <ClCompile Include="CWorker.cpp" />
+    <ClCompile Include="People2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CPersonImpl.h" />
+    <ClInclude Include="CWorker.h" />
+    <ClInclude Include="IPerson.h" />
+    <ClInclude Include="IWorker.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

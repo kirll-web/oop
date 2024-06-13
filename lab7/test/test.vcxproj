@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{165a0614-4734-4195-8b7b-30b3809518f7}</ProjectGuid>
-    <RootNamespace>StringLust</RootNamespace>
+    <ProjectGuid>{8bd0526f-ac8c-41c7-ab6f-388dbde3770a}</ProjectGuid>
+    <RootNamespace>test</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -104,7 +104,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -128,15 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CConstIterator.cpp" />
-    <ClCompile Include="CIterator.cpp" />
-    <ClCompile Include="CConstReverseIterator.cpp" />
-    <ClCompile Include="CReverseIterator.cpp" />
-    <ClCompile Include="CStringList.cpp" />
-    <ClCompile Include="StringLust.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CStringList.h" />
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
